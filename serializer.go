@@ -46,7 +46,7 @@ func (s *JSONSerializer) Serialize(session *sessions.Session) ([]byte, error) {
 	for k, v := range session.Values {
 		ks, ok := k.(string)
 		if !ok {
-			err := fmt.Errorf("Non-string key value, cannot serialize session to JSON: %v", k)
+			err := fmt.Errorf("non-string key value, cannot serialize session to JSON: %v", k)
 			fmt.Printf("redistore.JSONSerializer.serialize() Error: %v", err)
 			return nil, err
 		}
