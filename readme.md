@@ -1,3 +1,4 @@
+[![Testing](https://github.com/JensvandeWiel/valkeystore/actions/workflows/test.yml/badge.svg)](https://github.com/JensvandeWiel/valkeystore/actions/workflows/test.yml)
 # [gorilla/sessions](https://github.com/gorilla/sessions) Store implementation for [valkey](https://github.com/valkey-io/valkey)
 This implementation uses [valkey-io/go-valkey](https://github.com/valkey-io/valkey-go) as the client.
 
