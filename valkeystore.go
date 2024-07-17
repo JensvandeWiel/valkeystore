@@ -10,6 +10,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 )
 
 const DefaultKeyPrefix = "session:"
@@ -161,7 +162,7 @@ func (s *ValkeyStore) save(ctx context.Context, session *sessions.Session) error
 	}
 
 	// Save the session
-	err = s.client.Do(ctx, s.client.B().Set().Key(s.keyPrefix+session.ID).Value(string(b)).ExSeconds(int64(session.Options.MaxAge)).Build()).Error()
+	err = s.client.Do(ctx, s.client.B().Set().Key(s.keyPrefix+session.ID).Value(string(b)).Exat(time.Now().Add(time.Duration(session.Options.MaxAge)*time.Second)).Build()).Error()
 	if err != nil {
 		return err
 	}
