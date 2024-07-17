@@ -10,6 +10,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 )
 
 const DefaultKeyPrefix = "session:"
@@ -161,14 +162,11 @@ func (s *ValkeyStore) save(ctx context.Context, session *sessions.Session) error
 	}
 
 	// Save the session
-	err = s.client.Do(ctx, s.client.B().Set().Key(s.keyPrefix+session.ID).Value(string(b)).Build()).Error()
+	err = s.client.Do(ctx, s.client.B().Set().Key(s.keyPrefix+session.ID).Value(string(b)).Exat(time.Now().Add(time.Duration(session.Options.MaxAge)*time.Second)).Build()).Error()
 	if err != nil {
 		return err
 	}
-
-	// Set expiry
-	err = s.client.Do(ctx, s.client.B().Expire().Key(s.keyPrefix+session.ID).Seconds(int64(session.Options.MaxAge)).Build()).Error()
-	return err
+	return nil
 }
 
 // generateRandomKey returns a new random key
